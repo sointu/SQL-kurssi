@@ -52,6 +52,6 @@ public class Event {
         return "Id: " + this.getId() +
                 ", Kuvaus: " + this.getKuvaus()+
                 ", Paikka: " + this.getPaikka_nimi()+
-                ", Aika: " + this.getPaikka_nimi();
+                ", Aika: " + this.getAika();
     }
 }

@@ -11,8 +11,12 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        //Data data = new Data();
-        //data.createDatabase();
+        Data data = new Data();
+        if(!data.openDB()){
+            System.out.println("Ei voida avata tietokantayhteyttä.");
+            return;
+        }
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("1. Luo tietokanta.");
         System.out.println("2. Lisää uusi paikka antamalla paikan nimi.");
@@ -32,36 +36,31 @@ public class Main {
             switchValue = scanner.nextInt();
             switch (switchValue) {
                 case 1:
-                    Data data = new Data();
                     data.createDatabase();
                     System.out.println("Tietokanta luotu.");
                     break;
                 case 2:
-                    Data data2 = new Data();
                     Scanner scanner2 = new Scanner(System.in);
                     System.out.println("Anna paikan nimi: ");
                     String place = scanner2.nextLine();
-                    data2.insertPlace(place);
+                    data.insertPlace(place);
                     break;
                 case 3:
-                    Data data3 = new Data();
                     Scanner scanner3 = new Scanner(System.in);
                     System.out.println("Anna asiakkaan nimi: ");
                     String customer = scanner3.nextLine();
-                    data3.insertCustomer(customer);
+                    data.insertCustomer(customer);
                     break;
                 case 4:
-                    Data data4 = new Data();
                     Scanner scanner4 = new Scanner(System.in);
                     System.out.println("Lisää uusi paketti. Anna paketin seurantakoodi.");
                     int trackingCode = scanner4.nextInt();
                     System.out.println("Anna asiakkaan nimi.");
                     scanner4.nextLine();
                     String customerName = scanner4.nextLine();
-                    data4.insertParcel(trackingCode, customerName);
+                    data.insertParcel(trackingCode, customerName);
                     break;
                 case 5:
-                    Data data5 = new Data();
                     Scanner scanner5 = new Scanner(System.in);
                     System.out.println("Lisää uusi tapahtuma. Anna paketin seurantakoodi.");
                     int trackingCode2 = scanner5.nextInt();
@@ -72,14 +71,13 @@ public class Main {
                     String dateTime= scanner5.nextLine();
                     System.out.println("Anna kuvaus.");
                     String description = scanner5.nextLine();
-                    data5.insertEvent(trackingCode2, placeName, dateTime, description);
+                    data.insertEvent(trackingCode2, placeName, dateTime, description);
                     break;
                 case 6:
-                    Data data6 = new Data();
                     Scanner scanner6 = new Scanner(System.in);
                     System.out.println("Etsi tapahtumat. Anna paketin seurantakoodi.");
                     int trackingCode3 = scanner6.nextInt();
-                    List<Event> events = data6.queryEvents(trackingCode3);
+                    List<Event> events = data.queryEvents(trackingCode3);
                     //System.out.println(events);
                     System.out.println("Tapahtumat seurantakoodilla "+trackingCode3+":");
                     for(Event event: events) {
@@ -87,29 +85,28 @@ public class Main {
                     }
                     break;
                 case 7:
-                    Data data7 = new Data();
                     Scanner scanner7 = new Scanner(System.in);
                     System.out.println("Hae kaikki asiakkaan paketit ja niihin liittyvien tapahtumien määrä. Anna asiakkaan nimi.");
                     String customerName2 = scanner7.nextLine();
-                    List<CustomerParcel> customerParcels = data7.queryCustomerParcels(customerName2);
+                    List<CustomerParcel> customerParcels = data.queryCustomerParcels(customerName2);
                     for(CustomerParcel customerParcel: customerParcels) {
                         System.out.println(customerParcel);
                     }
                     break;
                 case 8:
-                    Data data8 = new Data();
                     Scanner scanner8 = new Scanner((System.in));
                     System.out.println("Haetaan annetusta paikasta tapahtumien määrä tiettynä päivänä. Anna paikka.");
                     String paikka = scanner8.nextLine();
                     System.out.println("Anna päivä muodossa YYYY-mm-dd");
                     String paiva = scanner8.nextLine();
-                    int count = data8.getEvents(paikka, paiva);
+                    int count = data.getEvents(paikka, paiva);
                     System.out.println("Paikasta "+paikka+" löytyi "+count+" tapahtumaa päivämäärällä "+paiva+".");
                     break;
                 case 9:
-                    System.out.println("case 9");
+                    data.testDB();
                     break;
                 case 0:
+                    data.closeDB();
                     quit = true;
                     break;
                 default:
