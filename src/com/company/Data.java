@@ -35,7 +35,8 @@ public class Data {
             openDB();
             Statement s = conn.createStatement();
             s.execute("BEGIN TRANSACTION");
-            // asiakkaan olemassaolon tarkistus edellyttää vierasavaimien valvontaa ym.
+
+            // Paketit- ja Tapahtumat-tauluissa on vierasavaimia
             s.execute("PRAGMA foreign_keys = ON;");
             s.execute("CREATE TABLE IF NOT EXISTS Paikat(\n" +
                     "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
@@ -189,7 +190,6 @@ public class Data {
     }
 
     public void testDB() {
-
         try {
             openDB();
             Statement s = conn.createStatement();
@@ -245,7 +245,7 @@ public class Data {
             // 4. Tapahtumien lisäys
             long time_4a = System.nanoTime();
 
-            for(int j = 1; j < 1001; j++){
+            for (int j = 1; j < 1001; j++) {
                 for (int i = 1; i < 1001; i++) {
                     p4.setInt(1, i);
                     p4.setString(2, "P" + i);
@@ -260,7 +260,7 @@ public class Data {
             // 5. Haetaan asiakkaan pakettien määrä
             long time_5a = System.nanoTime();
 
-            for(int i = 1; i < 1001; i++){
+            for (int i = 1; i < 1001; i++) {
                 p5.setString(1, "A" + i);
                 p5.executeQuery();
             }
@@ -271,7 +271,7 @@ public class Data {
             // 5. Haetaan paketin tapahtumien määrä
             long time_6a = System.nanoTime();
 
-            for(int i = 1; i < 1001; i++){
+            for (int i = 1; i < 1001; i++) {
                 p6.setString(1, "P" + i);
                 p6.executeQuery();
             }
@@ -285,7 +285,6 @@ public class Data {
         } catch (SQLException e) {
             System.out.println("Testi ei onnistunut. " + e.getMessage());
         }
-
     }
 }
 
